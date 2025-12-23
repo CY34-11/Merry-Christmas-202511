@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 圣诞快乐！</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(to bottom, #0a0a2a, #1a0033);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+        }
+        .header {
+            margin-bottom: 30px;
+            animation: fadeIn 2s;
+        }
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff3366, #ff9933, #33ff66);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+        .tree {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 0 auto 40px;
+        }
+        .tree-layer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 80px solid #0a7a0a;
+        }
+        .layer1 { bottom: 100px; border-bottom-color: #0a5c0a; }
+        .layer2 { bottom: 160px; border-left-width: 70px; border-right-width: 70px; border-bottom-width: 100px; border-bottom-color: #0a8a0a; }
+        .layer3 { bottom: 230px; border-left-width: 90px; border-right-width: 90px; border-bottom-width: 120px; border-bottom-color: #0a9a0a; }
+        .trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 80px;
+            background: #8B4513;
+        }
+        .star {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: gold;
+            font-size: 3rem;
+            animation: spin 3s linear infinite;
+        }
+        .ornament {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: bounce 2s infinite alternate;
+        }
+        .ornament:nth-child(1) { background: red; top: 120px; left: 40%; animation-delay: 0s; }
+        .ornament:nth-child(2) { background: blue; top: 150px; left: 60%; animation-delay: 0.3s; }
+        .ornament:nth-child(3) { background: gold; top: 200px; left: 35%; animation-delay: 0.6s; }
+        .ornament:nth-child(4) { background: purple; top: 180px; left: 65%; animation-delay: 0.9s; }
+        .ornament:nth-child(5) { background: cyan; top: 250px; left: 45%; animation-delay: 1.2s; }
+        .gifts {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0 40px;
+        }
+        .gift {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            animation: bounce 3s infinite alternate;
+        }
+        .gift-box { width: 100%; height: 100%; position: absolute; border-radius: 5px; }
+        .gift:nth-child(1) .gift-box { background: linear-gradient(45deg, #ff3366, #ff0066); }
+        .gift:nth-child(2) .gift-box { background: linear-gradient(45deg, #33cc33, #009933); }
+        .gift:nth-child(3) .gift-box { background: linear-gradient(45deg, #3366ff, #0033cc); }
+        .gift-lid { width: 100%; height: 15px; background: rgba(255,255,255,0.2); position: absolute; top: -8px; border-radius: 5px 5px 0 0; }
+        .message-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .message { font-size: 1.2rem; line-height: 1.6; }
+        .controls { margin: 25px 0; }
+        .btn {
+            padding: 12px 25px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(to right, #ff3366, #ff9933);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .btn:hover { transform: translateY(-3px); }
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .snowflake {
+            position: absolute;
+            color: white;
+            font-size: 1.5rem;
+            animation: fall linear infinite;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes spin { from { transform: translateX(-50%) rotate(0); } to { transform: translateX(-50%) rotate(360deg); } }
+        @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+        .footer { margin-top: 30px; color: #88aaff; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="container">
+        <div class="header">
+            <h1>🎄 圣诞快乐！ 🎄</h1>
+            <p>送上最诚挚的祝福，愿你圣诞充满温馨与喜悦</p >
+        </div>
+        
+        <div class="tree">
+            <div class="tree-layer layer3"></div>
+            <div class="tree-layer layer2"></div>
+            <div class="tree-layer layer1"></div>
+            <div class="trunk"></div>
+            <div class="star">★</div>
+            <div class="ornament"></div>
+            <div class="ornament"></div>
+            <div class="ornament"></div>
+            <div class="ornament"></div>
+            <div class="ornament"></div>
+        </div>
+        
+        <div class="gifts">
+            <div class="gift"><div class="gift-box"></div><div class="gift-lid"></div></div>
+            <div class="gift"><div class="gift-box"></div><div class="gift-lid"></div></div>
+            <div class="gift"><div class="gift-box"></div><div class="gift-lid"></div></div>
+        </div>
+        
+        <div class="message-box">
+            <div class="message" id="message">
+                亲爱的朋友，<br><br>
+                愿这个圣诞节为你带来<br>
+                平安、喜乐与无尽的祝福！<br>
+                圣诞快乐，新年蒙福！ 🎅
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="changeMessageBtn"><i class="fas fa-sync-alt"></i> 换一条祝福</button>
+            <button class="btn" id="nameBtn"><i class="fas fa-user-edit"></i> 添加名字</button>
+        </div>
+        
+        <div class="footer">
+            <p>🎅 这个圣诞树是专门为你创建的！</p >
+            <p>通过 GitHub Pages 分享 ❤️</p >
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 祝福语数组
+            const messages = [
+                "亲爱的{name}，<br><br>愿这个圣诞节为你带来<br>平安、喜乐与无尽的祝福！<br>圣诞快乐，新年蒙福！ 🎅",
+                "亲爱的{name}，<br><br>圣诞的钟声即将敲响，<br>愿你的心中充满温暖，<br>家庭充满欢笑！ 🎄",
+                "亲爱的{name}，<br><br>雪花飘落，铃儿响叮当，<br>愿这个圣诞节带给你<br>最美好的回忆！ ❄️",
+                "亲爱的{name}，<br><br>愿圣诞的喜悦洋溢在你的心间，<br>愿新年的希望点亮你的前程！ ✨",
+                "亲爱的{name}，<br><br>在这个温馨的节日里，<br>愿你的世界被爱与和平充满！ 🎁"
+            ];
+            
+            let recipientName = "朋友";
+            const messageElement = document.getElementById('message');
+            
+            // 生成雪花
+            function createSnowflakes() {
+                const snowflakesContainer = document.getElementById('snowflakes');
+                const snowflakeIcons = ['❄', '❅', '❆', '*'];
+                
+                for (let i = 0; i < 50; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.className = 'snowflake';
+                    snowflake.textContent = snowflakeIcons[Math.floor(Math.random() * snowflakeIcons.length)];
+                    snowflake.style.left = `${Math.random() * 100}%`;
+                    snowflake.style.fontSize = `${0.8 + Math.random() * 1.5}rem`;
+                    snowflake.style.opacity = `${0.3 + Math.random() * 0.7}`;
+                    snowflake.style.animationDuration = `${10 + Math.random() * 20}s`;
+                    snowflake.style.animationDelay = `${Math.random() * 5}s`;
+                    snowflakesContainer.appendChild(snowflake);
+                }
+            }
+            
+            // 更新祝福语
+            function updateMessage() {
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                const personalizedMessage = randomMessage.replace(/{name}/g, recipientName);
+                messageElement.innerHTML = personalizedMessage;
+            }
+            
+            // 添加名字
+            document.getElementById('nameBtn').addEventListener('click', function() {
+                const name = prompt("请输入收件人的名字：", recipientName);
+                if (name && name.trim() !== '') {
+                    recipientName = name.trim();
+                    updateMessage();
+                }
+            });
+            
+            // 换祝福语
+            document.getElementById('changeMessageBtn').addEventListener('click', updateMessage);
+            
+            // 初始化
+            createSnowflakes();
+            
+            // 点击礼物效果
+            document.querySelectorAll('.gift').forEach((gift, index) => {
+                gift.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                    
+                    const messages = [
+                        "🎁 礼物打开啦！里面装满了健康与平安！",
+                        "🎁 礼物打开啦！里面装满了快乐与幸福！",
+                        "🎁 礼物打开啦！里面装满了成功与财富！"
+                    ];
+                    
+                    alert(messages[index]);
+                });
+            });
+            
+            // 页面加载时询问名字
+            setTimeout(() => {
+                const name = prompt("请问收件人的名字是？", "朋友");
+                if (name && name.trim() !== '') {
+                    recipientName = name.trim();
+                    updateMessage();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
